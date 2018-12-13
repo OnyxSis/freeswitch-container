@@ -35,7 +35,7 @@ RUN touch /var/log/auth.log
 # Download FreeSWITCH.
 WORKDIR /usr/src
 ENV GIT_SSL_NO_VERIFY=1
-RUN git clone https://freeswitch.org/stash/scm/fs/freeswitch.git -b v1.6.16
+RUN git clone https://freeswitch.org/stash/scm/fs/freeswitch.git -b v1.8.2
 
 # Bootstrap the build.
 WORKDIR freeswitch

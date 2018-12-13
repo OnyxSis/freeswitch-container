@@ -5,7 +5,7 @@ FreeSWITCH Dockerfile
 [![Docker Pulls](https://img.shields.io/docker/pulls/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/bettervoice/freeswitch-container/)
 [![Docker Automated build](https://img.shields.io/docker/automated/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/bettervoice/freeswitch-container/)
 
-This project can be used to deploy a FreeSWITCH server inside a Docker container. The container currently uses the latest stable release version 1.6.x. An effort was made to build many modules so the container can be generic enough to serve many purposes.
+This project can be used to deploy a FreeSWITCH server inside a Docker container. The container currently uses the latest stable release version 1.8.x. An effort was made to build many modules so the container can be generic enough to serve many purposes.
 
 The container now includes fail2ban but in order for fail2ban to update the rules in IPTables it must be run with the `--privileged` flag.
 
@@ -17,7 +17,7 @@ The container exposes the following ports:
 
 ## Running the Container
 
-```CID=$(sudo docker run --name freeswitch -p 5060:5060/tcp -p 5060:5060/udp -p 5080:5080/tcp -p 5080:5080/udp -p 8021:8021/tcp -p 7443:7443/tcp -p 60535-65535:60535-65535/udp -v /home/ubuntu/freeswitch/conf:/usr/local/freeswitch/conf bettervoice/freeswitch-container:1.6.6)```
+```CID=$(sudo docker run --name freeswitch -p 5060:5060/tcp -p 5060:5060/udp -p 5080:5080/tcp -p 5080:5080/udp -p 8021:8021/tcp -p 7443:7443/tcp -p 60535-65535:60535-65535/udp -v /home/ubuntu/freeswitch/conf:/usr/local/freeswitch/conf bettervoice/freeswitch-container:1.8.2)```
 
 *Keep in mind that freeswitch has to be able to read the mounted volume.*
 

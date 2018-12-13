@@ -1,9 +1,9 @@
 FreeSWITCH Dockerfile
 =====================
 
-[![Docker Stars](https://img.shields.io/docker/stars/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/bettervoice/freeswitch-container/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/bettervoice/freeswitch-container/)
-[![Docker Automated build](https://img.shields.io/docker/automated/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/bettervoice/freeswitch-container/)
+[![Docker Stars](https://img.shields.io/docker/stars/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/OnyxSis/freeswitch-container/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/OnyxSis/freeswitch-container/)
+[![Docker Automated build](https://img.shields.io/docker/automated/bettervoice/freeswitch-container.svg)](https://hub.docker.com/r/OnyxSis/freeswitch-container/)
 
 This project can be used to deploy a FreeSWITCH server inside a Docker container. The container currently uses the latest stable release version 1.8.x. An effort was made to build many modules so the container can be generic enough to serve many purposes.
 

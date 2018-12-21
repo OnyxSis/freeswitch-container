@@ -15,7 +15,7 @@ RUN add-apt-repository ppa:certbot/certbot
 
 # Install Dependencies.
 # missing in 16.04 libmyodbc
-RUN apt-get update && apt-get install -y mysql-client certbot software-properties-common autoconf automake bison build-essential fail2ban gawk git-core groff groff-base erlang-dev libasound2-dev libavcodec-dev libavutil-dev libavformat-dev libav-tools libavresample-dev libswscale-dev liba52-0.7.4-dev libssl-dev libdb-dev libexpat1-dev libcurl4-openssl-dev libgdbm-dev libgnutls-dev libjpeg-dev libmp3lame-dev libncurses5 libncurses5-dev libperl-dev libogg-dev libsnmp-dev libtiff5-dev libtool libvorbis-dev libx11-dev libzrtpcpp-dev make portaudio19-dev python-dev snmp snmpd subversion unixodbc-dev uuid-dev zlib1g-dev libsqlite3-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libladspa-ocaml-dev libmemcached-dev libmp4v2-dev libpq-dev libvlc-dev libv8-dev liblua5.2-dev libyaml-dev libpython-dev odbc-postgresql sendmail unixodbc wget yasm libldap2-dev
+RUN apt-get update && apt-get install -y supervisor mysql-client certbot software-properties-common autoconf automake bison build-essential fail2ban gawk git-core groff groff-base erlang-dev libasound2-dev libavcodec-dev libavutil-dev libavformat-dev libav-tools libavresample-dev libswscale-dev liba52-0.7.4-dev libssl-dev libdb-dev libexpat1-dev libcurl4-openssl-dev libgdbm-dev libgnutls-dev libjpeg-dev libmp3lame-dev libncurses5 libncurses5-dev libperl-dev libogg-dev libsnmp-dev libtiff5-dev libtool libvorbis-dev libx11-dev libzrtpcpp-dev make portaudio19-dev python-dev snmp snmpd subversion unixodbc-dev uuid-dev zlib1g-dev libsqlite3-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libladspa-ocaml-dev libmemcached-dev libmp4v2-dev libpq-dev libvlc-dev libv8-dev liblua5.2-dev libyaml-dev libpython-dev odbc-postgresql sendmail unixodbc wget yasm libldap2-dev
 
 # Use Gawk.
 RUN update-alternatives --set awk /usr/bin/gawk
@@ -38,6 +38,22 @@ RUN echo "CPTimeout       =" >>/etc/odbcinst.ini
 RUN echo "CPReuse         =" >>/etc/odbcinst.ini
 RUN echo "Usage = 1" >>/etc/odbcinst.ini
 RUN echo "" >>/etc/odbcinst.ini
+
+RUN echo "[program:freeswitch]" >/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "command=/usr/local/freeswitch/bin/freeswitch -u freeswitch -g daemon -rp -nonat" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "autostart=true" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "autorestart=true" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "startsecs=10" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "; Need to wait for currently executing tasks to finish at shutdown." >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "; Increase this if you have very long running tasks." >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "stopwaitsecs = 600" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "; When resorting to send SIGKILL to the program to terminate it" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "; send SIGKILL to its whole process group instead," >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "; taking care of its children as well." >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "killasgroup=true" >>/etc/supervisor/conf.d/freeswitch.conf
+RUN echo "" >>/etc/supervisor/conf.d/freeswitch.conf
 
 # Configure Fail2ban
 ADD conf/freeswitch.conf /etc/fail2ban/filter.d/freeswitch.conf
@@ -88,4 +104,4 @@ EXPOSE 8021/tcp
 EXPOSE 64535-65535/udp
 
 # Start the container.
-CMD service snmpd start && service freeswitch start && tail -f /usr/local/freeswitch/log/freeswitch.log
+CMD supervisord -n -c /etc/supervisor/supervisord.conf
